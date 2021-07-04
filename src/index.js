@@ -14,9 +14,14 @@ const errorHandler = require('./middlewares/errorHandler');
 require('dotenv').config();
 require('./models');
 
-const { PORT } = require('./configs');
+const { PORT, NODE_ENV } = require('./configs');
 
 const app = express();
+
+if (NODE_ENV !== 'production') {
+  const swagger = require('./swagger');
+  swagger.createDocument();
+}
 
 app.use(cors());
 app.use(helmet());
